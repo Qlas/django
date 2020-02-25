@@ -1,0 +1,76 @@
+{% load bootstrap4 %}
+{% load static %}
+<html>
+<head>
+    <title>Help Desk</title>
+    <link rel="shortcut icon" href="http://aux2.iconspalace.com/uploads/3932673271958876865.png" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'helpdesk/css/main.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <a class="navbar-brand" href=" {% url 'home' %}">HelpDesk</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggle">
+            {% if user.is_authenticated %}
+                <a class="nav-item nav-link text-white pl-0" href="#">My Issues</a>
+            {% endif %}
+            <div class="navbar-nav ml-auto">
+                  <form class="form-inline m-0 mr-2" method="POST" action="{% url 'user' %}">
+                      {% csrf_token %}
+                    <div class="input-group">
+                      <input name="username" type="text" class="form-control text-white search border-0 rounded-left a" placeholder="Username">
+                        <div class="input-group-prepend">
+                            <button class="fa fa-search text-white search border-0 btn-outline-primary input-group-text search border-0 rounded-right" type="submit"></button>
+                        </div>
+                    </div>
+                  </form>
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-item navbar-brand p-lg-0 nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            <img src="{{ user.profile.image.url }}" alt="Logo" style="height: 35px;">
+                        </a>
+                        <div class="dropdown-menu border-0 mt-1 bg-steel pb-0">
+                            <a class="dropdown-item text-white nav-link" href="{% url 'profile' %}">Account</a>
+                            <a class="dropdown-item text-white nav-link" href="#">Help</a>
+                            <a class="dropdown-item text-white nav-link" href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <a class="nav-item nav-link" href="{% url 'login' %}">Log In</a>
+                    <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </nav>
+
+    <main role="main">
+      <div class="row">
+        <div class="col-md-12">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}  mx-auto text-center">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+          {% block content %}{% endblock %}
+        </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{% extends "helpdesk/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="col-md-12 font-weight-bold border-bottom pb-3 h2" style="font-family: 'Arial'">
+    <span class="fa fa-desktop text-white search p-2 rounded-circle"></span> IT Help Desk
+    </div>
+    {% if user.is_authenticated %}
+        <div class="row">
+            <div class="col-md-6 mt-2 pl-4">
+                <h3>Create a request</h3>
+                <table class="table table-hover table-borderless" style="cursor: pointer;">
+                    <tbody>
+                    <tr onclick="window.location.href = '{% url 'profile' %}';">
+                        <th class="h1 pl-0">
+                            <div class="float-left mr-1 search text-white rounded p-1 text-center" style="width: 55px">
+                            <span class="fa fa-folder-o"></span>
+                            </div>
+                        </th>
+                        <td class="pl-0">
+                            <h6>Software problem</h6>
+                            <span>Give us your problem with software problem</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="pl-0 h1">
+                            <div class="float-left mr-1 search text-white rounded p-1 text-center" style="width: 55px">
+                            <span class="fa fa-floppy-o"></span>
+                            </div>
+                        </th>
+                        <td class="pl-0">
+                            <h6>Hardware Problem</h6>
+                            <span>Give us your problem with hardware problem</span>
+                        </td>
+                    </tr>
+                    <tr data-toggle="modal" data-target="#exampleModal">
+                        <th class="pl-0 h1">
+                            <div class="float-left mr-1 search text-white rounded p-1 text-center" style="width: 55px">
+                            <i class="fa fa-user-md"></i>
+                            </div>
+                        </th>
+                        <td class="pl-0">
+                            <h6>Account Problem</h6>
+                            <span>Tell us if you have problem with account, or we need to create account for you</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h3>My recent requests</h3>
+                <span class="font-weight-light">Nothing to show there</span>
+            </div>
+        </div>
+    {% else %}
+        <div class="">Welcome in the help desk - You need to log in</div>
+    {% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Account problem</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group mb-0">
+                {% crispy form %}
+
+
+            </fieldset>
+        </form>
+
+  </div>
+</div>
+  </div>
+</div>
+{% endblock content %}
