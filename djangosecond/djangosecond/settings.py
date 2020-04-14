@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'w)^+b6lsb!*orm)d%0)zys$p5^(+(acr858@!90i!(lh(l6mx5'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (os.environ.get('DEBUG_VALUE') == True)
 
 ALLOWED_HOSTS = ['192.168.1.17', '127.0.0.1']
 
@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['192.168.1.17', '127.0.0.1']
 
 INSTALLED_APPS = [
     'dal',
+    'helpdesk.templatetags.custom_filter_tags',
     'dal_select2',
     'bootstrap4',
     'widget_tweaks',
@@ -113,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Warsaw'
 
 USE_I18N = True
 
